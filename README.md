@@ -8,7 +8,7 @@
 
 This is a privacy frontend for YouTube, designed to enhance user privacy while watching videos.
 
-> demo (may be slow) : wip
+> demo (may be slow) : https://demo.litetube.freeddns.org/
 
 side note: demo is slow to start since it's hosted on replit, it take time to start (30-60).
 
