@@ -8,7 +8,8 @@
 
 This is a privacy frontend for YouTube, designed to enhance user privacy while watching videos.
 
-> demo (may be slow) : ----
+> demo (may be slow) : wip
+
 side note: demo is slow to start since it's hosted on replit, it take time to start (30-60).
 
 `⚠️ This project is currently a work in progress and is still unfinished. While I'm actively working on it and making progress, there may still be bugs and incomplete features. ⚠️`
@@ -24,7 +25,7 @@ side note: demo is slow to start since it's hosted on replit, it take time to st
 
 ## Star History
 
-----
+[![Star History Chart](https://api.star-history.com/svg?repos=mollomm1/LiteTube&type=Date)](https://star-history.com/#mollomm1/LiteTube&Date)
 
 # Screenshots
 
