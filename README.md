@@ -1,7 +1,7 @@
 <p align="center">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Mollomm1/LiteTube/blob/main/static/logo.png?raw=true">
-      <source media="(prefers-color-scheme: light)" srcset="https://github.com/Mollomm1/LiteTube/blob/main/static/logo_white_theme.png?raw=true">
+      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Mollomm1/LiteTube/blob/master/static/logo.png?raw=true">
+      <source media="(prefers-color-scheme: light)" srcset="https://github.com/Mollomm1/LiteTube/blob/master/static/logo_white_theme.png?raw=true">
       <img alt="" src="">
     </picture>
 </p>
@@ -30,19 +30,19 @@ side note: demo is slow to start since it's hosted on replit, it take time to st
 
 Home:
 
-<img src="https://github.com/Mollomm1/LiteTube/blob/main/assets/screenshots/1.png?raw=true" alt="1" width="200"/>
+<img src="https://github.com/Mollomm1/LiteTube/blob/master/assets/screenshots/1.png?raw=true" alt="1" width="200"/>
 
 Search:
 
-<img src="https://github.com/Mollomm1/LiteTube/blob/main/assets/screenshots/2.png?raw=true" alt="2" width="200"/>
+<img src="https://github.com/Mollomm1/LiteTube/blob/master/assets/screenshots/2.png?raw=true" alt="2" width="200"/>
 
 Watch:
 
-<img src="https://github.com/Mollomm1/LiteTube/blob/main/assets/screenshots/3.png?raw=true" alt="3" width="200"/>
+<img src="https://github.com/Mollomm1/LiteTube/blob/master/assets/screenshots/3.png?raw=true" alt="3" width="200"/>
 
 Channel:
 
-<img src="https://github.com/Mollomm1/LiteTube/blob/main/assets/screenshots/4.png?raw=true" alt="4" width="200"/>
+<img src="https://github.com/Mollomm1/LiteTube/blob/master/assets/screenshots/4.png?raw=true" alt="4" width="200"/>
 
 # Installing (debug)
 1. install python3 on https://www.python.org/ or using your package manager
