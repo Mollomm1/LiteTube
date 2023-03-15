@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1 class="text-4xl font-bold mt-12 text-gray-100 mb-8">Search Results for "{{ query }}"</h1>
+<div id="videocontainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div id="videotemplate" style="display:none"
+    class="flex flex-col bg-gray-800 hover:bg-gray-700 focus:bg-gray-600 focus:outline-none transition rounded-lg overflow-hidden shadow-md self-stretch transition-all duration-200 hover:scale-95 focus:ring-2 focus:ring-offset-2 focus:ring-green-500 hover:ring-2 hover:ring-offset-2 hover:ring-green-500 hover:ring-offset-gray-800">
+    <a href="/watch/">
+      <img class="rounded w-full mb-2" src="" alt="">
+      <h2 class="p-4 pb-0 text-lg text-white font-medium"></h2>
+      <p class="p-4 pt-0 text-gray-400"></p>
+    </a>
+    <div class="flex flex-col"></div>
+    <p class="mt-auto p-4 pt-0 text-gray-400 hover:text-gray-300"><a class=""
+        href="">channel_name</a></p>
+  </div>
+  {% for result in search_results %}
+  <div
+    class="flex flex-col bg-gray-800 hover:bg-gray-700 focus:bg-gray-600 focus:outline-none transition rounded-lg overflow-hidden shadow-md self-stretch transition-all duration-200 hover:scale-95 focus:ring-2 focus:ring-offset-2 focus:ring-green-500 hover:ring-2 hover:ring-offset-2 hover:ring-green-500 hover:ring-offset-gray-800">
+    <a href="/watch/{{ result['id'] }}">
+      <img class="rounded w-full mb-2" src="{{ result['thumbnail'] }}" alt="{{ result['title'] }}">
+      <h2 class="p-4 pb-0 text-lg text-white font-medium">{{ result["title"] }}</h2>
+      <p class="p-4 pt-0 text-gray-400">{{ human_format(result["views"]) }} views, {{ result["published"] }}</p>
+    </a>
+    <div class="flex flex-col"></div>
+    <p class="mt-auto p-4 pt-0 text-gray-400 hover:text-gray-300"><a class=""
+        href="{{ '/c'+(result['owner_url']) }}">{{ result['channel'] }}</a></p>
+  </div>
+  {% endfor %}
+</div>
+<noscript class="text-white">to load more videos enable javascript</noscript>
+<button id="loadmore" style="display:none" class="w-full text-white bg-gray-800 mt-8 mb-8 pr-26 pl-26 hover:bg-gray-600 text-hite font-bold py-2 px-4 rounded-full focus:outline-none shadow-md self-stretch transition-all duration-200 hover:scale-95 focus:ring-2 focus:ring-offset-2 focus:ring-green-500 focus:border-transparent">Load More Videos</button>
+<script>
+  document.getElementById('loadmore').style.display = 'block';
+</script>
+<script>
+  const button = document.getElementById('loadmore');
+  const videotemplate = document.getElementById("videotemplate");
+  const videocontainer = document.getElementById("videocontainer");
+  var token = "{{token}}"
+
+  function newvideo(data) {
+    const clone = videotemplate.cloneNode(true);
+    clone.id = "clonedvideo";
+    clone.children[0].href = "/watch/"+data["id"];
+    clone.children[0].children[0].src = data["thumbnail"];
+    clone.children[0].children[0].alt = data["title"];
+    clone.children[0].children[1].innerHTML = data["title"];
+    clone.children[0].children[2].innerHTML = data["views"]+" views, "+data["published"];
+    clone.children[2].children[0].innerHTML = data["channel"];
+    clone.children[2].children[0].href = "/c"+data["owner_url"];
+    clone.style.display = 'block';
+    videocontainer.appendChild(clone);
+  }
+
+  function cratevideos(data, newtoken) {
+    console.log(data)
+    for (i in data) {
+      console.log('bruh')
+      newvideo(data[i]);
+    };
+    token = newtoken
+    button.disabled = false;
+  }
+
+  button.onclick = function () {
+    button.disabled = true;
+    fetch('/search?q={{query}}&key={{key}}&token='+token)
+      .then(response => response.json())
+      .then(data => cratevideos(data["videos"], data["token"]))
+      .catch(error => alert(error));
+    };
+</script>
+{% endblock %}

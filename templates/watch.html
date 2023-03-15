@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-wrap -mx-4">
+            <div class="w-full lg:w-3/4 px-4">
+                <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden mt-4">
+                    <div class="p-4">
+                    	<video controls src="{{ video_url }}"></video>
+                        <h1 class="text-gray-100 font-bold text-xl">{{ video.title }}</h1>
+                        <p class="text-gray-500 hover:text-gray-400 text-sm"><a href="{{ video.channel_url.replace('https://www.youtube.com', '') }}">{{ video.author }}</a></p>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden mt-4">
+                    <div class="p-4">
+                    	<p class="text-gray-500 text-sm">{{ video.views }} views.</p>
+                        <p class="text-gray-500 text-sm">{{ video.description }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full h-full max-h-full overflow-y-scroll mt-4 lg:w-1/4 px-4">
+                <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <h2 class="text-gray-100 font-bold text-lg mb-4">Related Videos</h2>
+                        <div class="grid grid-cols-1 gap-4">
+                            {% for result in data %}
+                            <div class="flex flex-col bg-gray-700 hover:bg-gray-600 focus:bg-gray-600 focus:outline-none transition rounded-lg overflow-hidden shadow-md self-stretch transition-all duration-200 hover:scale-95 focus:ring-2 focus:ring-offset-2 focus:ring-green-500 hover:ring-2 hover:ring-offset-2 hover:ring-green-500 hover:ring-offset-gray-800">
+                                <a href="/watch/{{ result['id'] }}">
+                                  <img class="rounded w-full mb-2" src="{{ result['thumbnail'] }}" alt="{{ result['title'] }}">
+                                  <h2 class="p-4 pb-0 text-lg text-white font-medium">{{ result["title"] }}</h2>
+                                  <p class="p-4 pt-0 text-gray-400">{{ result["views"] }} views, {{ result["published"] }}</p>
+                                </a>
+                                <div class="flex flex-col"></div>
+                                <p class="mt-auto p-4 pt-0 text-gray-400 hover:text-gray-300"><a class="" href="{{ result['owner_url'].replace('https://www.youtube.com', '') }}">{{ result['author'] }}</a></p>
+                              </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
