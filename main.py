@@ -2,9 +2,10 @@ from flask import Flask, render_template, request, redirect
 from pytube import YouTube
 import requests, urllib.parse, re
 from liblitetube import *
+from watch import *
 
 def get_related(video):
-    search = Search(video.title+" "+video.author)
+    search = Search(video["title"]+" "+video["uploader"])
     search_results = search['results']
     return(search_results)
 
@@ -15,13 +16,13 @@ def index():
     return render_template("index.html")
 
 @app.route("/watch/<video_id>")
-def watch(video_id):
-    youtube_url = 'https://www.youtube.com/watch?v='+video_id
+def _watch(video_id):
+    video = GetTracks(video_id)
+    streams = video["streams"]
+    data = get_related(video)
+    return render_template('watch.html', streams=streams, video=video, data=data)
     try:
-        video = YouTube(youtube_url)
-        video_url = video.streams.get_highest_resolution().url
-        data = get_related(video)
-        return render_template('watch.html', video_url=video_url, video=video, data=data)
+        print(" ")
     except Exception as e:
         return str(e)
 

@@ -1,23 +1,57 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<link rel="stylesheet" href="https://cdn.plyr.io/3.7.7/plyr.css" />
+    <script src="https://cdn.plyr.io/3.7.7/plyr.js"></script>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex flex-wrap -mx-4">
             <div class="w-full lg:w-3/4 px-4">
                 <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden mt-4">
                     <div class="p-4">
-                    	<video controls src="{{ video_url }}"></video>
-                        <h1 class="text-gray-100 font-bold text-xl">{{ video.title }}</h1>
-                        <p class="text-gray-500 hover:text-gray-400 text-sm"><a href="{{ video.channel_url.replace('https://www.youtube.com', '') }}">{{ video.author }}</a></p>
+                    	<video id="player" controls playsinline poster="{{ video["thumbnail"] }}">
+                            {% for stream in streams %}
+                            <source src="{{ streams[stream][0]["url"] }}" size="{{ streams[stream][0]["size"] }}">
+                            {% endfor %}
+                            Your browser does not support the video tag.
+                        </video>
+                        <script>
+                        const player = new Plyr('#player');
+                        </script>
+                        <h1 class="text-gray-100 font-bold text-xl">{{ video["title"] }}</h1>
+                        <p class="text-gray-500 hover:text-gray-400 text-sm"><a href="{{ '/channel/'+video['channel_id'] }}">{{ video["uploader"] }}</a></p>
                     </div>
                 </div>
+                <button type="button" class="group cursor-default mt-4 w-full bg-gray-800 rounded-md px-3.5 py-2.5 text-sm text-left font-medium text-gray-200 focus:outline-none focus:ring-0 focus:ring-0 focus:ring-offset-transparent focus:ring-transparent">
+                <span class="flex w-full justify-between items-center">
+                  <span class="flex min-w-0 items-center justify-between space-x-3">
+                    <!-- todo
+                        <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="" alt="">
+                    -->
+                    <span class="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-700">
+                        <svg class="h-full w-full text-gray-300" fill="#111" viewBox="0 0 24 24">
+                          <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </span>
+                    <span class="flex-1 flex flex-col min-w-0">
+                      <span class="text-white text-sm font-medium truncate">{{ video["uploader"] }}</span>
+                      <span class="text-gray-500 text-sm truncate">{{ video["channel_follower_count"] }} Subscribers</span>
+                    </span>
+                  </span>
+                  <a href="{{ '/channel/'+video['channel_id'] }}" type="button" class="inline-flex cursor-pointer items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-transparant focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">View Channel</a>
+                </span>
+                </button>
                 <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden mt-4">
                     <div class="p-4">
-                    	<p class="text-gray-500 text-sm">{{ video.views }} views.</p>
-                        <p class="text-gray-500 text-sm">{{ video.description }}</p>
+                    	<p class="text-gray-500 text-sm">{{ video["view_count"] }} views.</p>
+                        <div class="text-gray-500">
+                            {% for para in video["description"].split('\n') %}
+                               <p>{{para}}</p>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
+            
             <div class="w-full h-full max-h-full overflow-y-scroll mt-4 lg:w-1/4 px-4">
                 <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden">
                     <div class="p-4">
