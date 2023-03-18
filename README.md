@@ -60,9 +60,15 @@ MIT
 
 # Credit
 upload icon - https://www.svgrepo.com/svg/472024/upload-01
+
 view icon - https://www.svgrepo.com/svg/341292/view
+
 Like icon - https://www.svgrepo.com/svg/111221/like
+
 Share icon - https://www.svgrepo.com/svg/506316/share-1
+
 Download icon - https://www.svgrepo.com/svg/491014/download-3
+
 more users - https://www.svgrepo.com/svg/506361/users-more
+
 video - https://www.svgrepo.com/svg/334979/videos
