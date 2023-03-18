@@ -2,75 +2,200 @@
 
 {% block content %}
 <link rel="stylesheet" href="https://cdn.plyr.io/3.7.7/plyr.css" />
-    <script src="https://cdn.plyr.io/3.7.7/plyr.js"></script>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="flex flex-wrap -mx-4">
-            <div class="w-full lg:w-3/4 px-4">
-                <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden mt-4">
-                    <div class="p-4">
-                    	<video id="player" controls playsinline poster="{{ video["thumbnail"] }}">
-                            {% for stream in streams %}
-                            <source src="{{ streams[stream][0]["url"] }}" size="{{ streams[stream][0]["size"] }}">
-                            {% endfor %}
-                            Your browser does not support the video tag.
-                        </video>
-                        <script>
+<style>
+    :root {
+        --plyr-color-main: #c52222;
+        --plyr-badge-text-color: white;
+        --plyr-tooltip-background: black;
+        --plyr-menu-background: #111827;
+        --plyr-menu-color: white;
+
+    }
+</style>
+<script src="https://cdn.plyr.io/3.7.7/plyr.js"></script>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-wrap -mx-4">
+        <div class="w-full lg:w-3/4 px-4">
+            <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden mt-4">
+                <div class="p-4">
+                    <video id="player" controls playsinline poster="{{ video["thumbnail"] }}">
+                        {% for stream in streams %}
+                        <source src="{{ streams[stream][0]["url"] }}" size="{{ streams[stream][0]["size"] }}">
+                        {% endfor %}
+                        Your browser does not support the video tag.
+                    </video>
+                    <script>
                         const player = new Plyr('#player');
-                        </script>
-                        <h1 class="text-gray-100 font-bold text-xl">{{ video["title"] }}</h1>
-                    </div>
-                </div>
-                <button type="button" class="group cursor-default mt-4 w-full bg-gray-800 rounded-md px-3.5 py-2.5 text-sm text-left font-medium text-gray-200 focus:outline-none focus:ring-0 focus:ring-0 focus:ring-offset-transparent focus:ring-transparent">
-                <span class="flex w-full justify-between items-center">
-                  <span class="flex min-w-0 items-center justify-between space-x-3">
-                    <!-- todo
-                        <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="" alt="">
-                    -->
-                    <span class="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-700">
-                        <svg class="h-full w-full text-gray-300" fill="#111" viewBox="0 0 24 24">
-                          <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </script>
+                    <h1 class="text-gray-100 font-bold text-xl">{{ video["title"] }}</h1>
+                    <div class="text-white inline-flex flex mt-0.5 items-center">
+                        <svg class="mr-1" fill="#ffffff" height="15" width="15" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 478.2 478.2" xml:space="preserve">
+                            <g stroke-width="0"></g>
+                            <g stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g>
+                                <g>
+                                    <path
+                                        d="M457.575,325.1c9.8-12.5,14.5-25.9,13.9-39.7c-0.6-15.2-7.4-27.1-13-34.4c6.5-16.2,9-41.7-12.7-61.5 c-15.9-14.5-42.9-21-80.3-19.2c-26.3,1.2-48.3,6.1-49.2,6.3h-0.1c-5,0.9-10.3,2-15.7,3.2c-0.4-6.4,0.7-22.3,12.5-58.1 c14-42.6,13.2-75.2-2.6-97c-16.6-22.9-43.1-24.7-50.9-24.7c-7.5,0-14.4,3.1-19.3,8.8c-11.1,12.9-9.8,36.7-8.4,47.7 c-13.2,35.4-50.2,122.2-81.5,146.3c-0.6,0.4-1.1,0.9-1.6,1.4c-9.2,9.7-15.4,20.2-19.6,29.4c-5.9-3.2-12.6-5-19.8-5h-61 c-23,0-41.6,18.7-41.6,41.6v162.5c0,23,18.7,41.6,41.6,41.6h61c8.9,0,17.2-2.8,24-7.6l23.5,2.8c3.6,0.5,67.6,8.6,133.3,7.3 c11.9,0.9,23.1,1.4,33.5,1.4c17.9,0,33.5-1.4,46.5-4.2c30.6-6.5,51.5-19.5,62.1-38.6c8.1-14.6,8.1-29.1,6.8-38.3 c19.9-18,23.4-37.9,22.7-51.9C461.275,337.1,459.475,330.2,457.575,325.1z M48.275,447.3c-8.1,0-14.6-6.6-14.6-14.6V270.1 c0-8.1,6.6-14.6,14.6-14.6h61c8.1,0,14.6,6.6,14.6,14.6v162.5c0,8.1-6.6,14.6-14.6,14.6h-61V447.3z M431.975,313.4 c-4.2,4.4-5,11.1-1.8,16.3c0,0.1,4.1,7.1,4.6,16.7c0.7,13.1-5.6,24.7-18.8,34.6c-4.7,3.6-6.6,9.8-4.6,15.4c0,0.1,4.3,13.3-2.7,25.8 c-6.7,12-21.6,20.6-44.2,25.4c-18.1,3.9-42.7,4.6-72.9,2.2c-0.4,0-0.9,0-1.4,0c-64.3,1.4-129.3-7-130-7.1h-0.1l-10.1-1.2 c0.6-2.8,0.9-5.8,0.9-8.8V270.1c0-4.3-0.7-8.5-1.9-12.4c1.8-6.7,6.8-21.6,18.6-34.3c44.9-35.6,88.8-155.7,90.7-160.9 c0.8-2.1,1-4.4,0.6-6.7c-1.7-11.2-1.1-24.9,1.3-29c5.3,0.1,19.6,1.6,28.2,13.5c10.2,14.1,9.8,39.3-1.2,72.7 c-16.8,50.9-18.2,77.7-4.9,89.5c6.6,5.9,15.4,6.2,21.8,3.9c6.1-1.4,11.9-2.6,17.4-3.5c0.4-0.1,0.9-0.2,1.3-0.3 c30.7-6.7,85.7-10.8,104.8,6.6c16.2,14.8,4.7,34.4,3.4,36.5c-3.7,5.6-2.6,12.9,2.4,17.4c0.1,0.1,10.6,10,11.1,23.3 C444.875,295.3,440.675,304.4,431.975,313.4z">
+                                    </path>
+                                </g>
+                            </g>
                         </svg>
-                    </span>
-                    <span class="flex-1 flex flex-col min-w-0">
-                      <span class="text-white text-sm font-medium truncate">{{ video["uploader"] }}</span>
-                      <span class="text-gray-500 text-sm truncate">{{ video["channel_follower_count"] }} Subscribers</span>
-                    </span>
-                  </span>
-                  <a href="{{ '/channel/'+video['channel_id'] }}" type="button" class="inline-flex cursor-pointer items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-transparant focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">View Channel</a>
-                </span>
+                        {{ video["like_count"] }}
+                    </div>
+                    <div class="text-white inline-flex flex mt-0.5 items-center">
+                        <svg class="ml-2 mr-1" fill="#ffffff" height="15" width="15" viewBox="0 0 32 32"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g stroke-width="0"></g>
+                            <g stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <defs>
+                                    <style>
+                                        .cls-1 {
+                                            fill: none;
+                                        }
+                                    </style>
+                                </defs>
+                                <title>view</title>
+                                <path
+                                    d="M30.94,15.66A16.69,16.69,0,0,0,16,5,16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16.69,16.69,0,0,0,16,27,16.69,16.69,0,0,0,30.94,16.34,1,1,0,0,0,30.94,15.66ZM16,25c-5.3,0-10.9-3.93-12.93-9C5.1,10.93,10.7,7,16,7s10.9,3.93,12.93,9C26.9,21.07,21.3,25,16,25Z"
+                                    transform="translate(0 0)"></path>
+                                <path d="M16,10a6,6,0,1,0,6,6A6,6,0,0,0,16,10Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,16,20Z"
+                                    transform="translate(0 0)"></path>
+                                <rect data-name="<Transparent Rectangle>" class="cls-1" width="32" height="32"></rect>
+                            </g>
+                        </svg>
+                        {{ video["view_count"] }}
+                    </div>
+                    <div class="text-white inline-flex flex mt-0.5 items-center">
+                        <svg class="ml-2 mr-1" height="15" width="15" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g stroke-width="0"></g>
+                            <g stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path
+                                    d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"
+                                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                </path>
+                            </g>
+                        </svg>
+                        {{ video["upload_date"] }}
+                    </div>
+                    {% if video["age_limit"] == 18 %}
+                    <div class="text-white inline-flex flex mt-0.5 items-center">
+                        <svg height="15" width="15" xmlns="http://www.w3.org/2000/svg" class=""></svg>
+                        <span
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-900">
+                            NSFW </span>
+                    </div>
+                    {% else %}
+
+                    {% endif %}
+                </div>
+                <button id="sharebutton" type="button"
+                    class="inline-flex m-3 mr-0 mt-0 cursor-pointer items-center justify-center px-2 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-transparant focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    <svg class="mr-1" fill="none" xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 24 24">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path
+                                d="M8.68439 10.6578L15.3124 7.34378M15.3156 16.6578L8.69379 13.3469M21 6C21 7.65685 19.6569 9 18 9C16.3431 9 15 7.65685 15 6C15 4.34315 16.3431 3 18 3C19.6569 3 21 4.34315 21 6ZM9 12C9 13.6569 7.65685 15 6 15C4.34315 15 3 13.6569 3 12C3 10.3431 4.34315 9 6 9C7.65685 9 9 10.3431 9 12ZM21 18C21 19.6569 19.6569 21 18 21C16.3431 21 15 19.6569 15 18C15 16.3431 16.3431 15 18 15C19.6569 15 21 16.3431 21 18Z"
+                                stroke="#ffffff" stroke-width="1.5"></path>
+                        </g>
+                    </svg>
+                    Share
+                    <input id="myInput" style="display: none" class="ml-0.5 bg-gray-800 rounded-md" value="" />
                 </button>
-                <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden mt-4">
-                    <div class="p-4">
-                    	<p class="text-gray-500 text-sm">{{ video["view_count"] }} views.</p>
-                        <div class="text-gray-500">
-                            {% for para in video["description"].split('\n') %}
-                               <p>{{para}}</p>
-                            {% endfor %}
-                        </div>
+                <script>
+                    link = window.location.href
+                    document.getElementById("sharebutton").onclick = function () {
+                        var copyText = document.getElementById("myInput");
+                        copyText.select();
+                        copyText.setSelectionRange(0, 500);
+                        navigator.clipboard.writeText(link);
+                        alert("copied link in clipboard")
+                    }
+                </script>
+                {% for stream in streams %}
+                <a download href="{{ streams[stream][0]["url"] }}" target="_blank" rel="noopener noreferreré type="button"
+                    class="inline-flex m-3 mr-0 mt-0 cursor-pointer items-center justify-center px-2 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-transparant focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    <svg width="16" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <title>Download-3</title>
+                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g id="Download-3">
+                                    <rect id="Rectangle" fill-rule="nonzero" x="0" y="0" width="24" height="24"> </rect>
+                                    <line x1="12" y1="5" x2="12" y2="15" id="Path" stroke="#ffffff" stroke-width="2"
+                                        stroke-linecap="round"> </line>
+                                    <path
+                                        d="M17,11 L12.7071,15.2929 C12.3166,15.6834 11.6834,15.6834 11.2929,15.2929 L7,11"
+                                        id="Path" stroke="#ffffff" stroke-width="2" stroke-linecap="round"> </path>
+                                    <line x1="19" y1="20" x2="5" y2="20" id="Path" stroke="#ffffff" stroke-width="2"
+                                        stroke-linecap="round"> </line>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                    {{ stream }}
+                </a>
+                {% endfor %}
+            </div>
+            <button type="button"
+                class="group cursor-default mt-4 w-full bg-gray-800 rounded-md px-3.5 py-2.5 text-sm text-left font-medium text-gray-200 focus:outline-none focus:ring-0 focus:ring-0 focus:ring-offset-transparent focus:ring-transparent">
+                <span class="flex w-full justify-between items-center">
+                    <span class="flex min-w-0 items-center justify-between space-x-3">
+                        <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0"
+                            src="/channelicon/{{ video['channel_id'] }}" alt="">
+                        <span class="flex-1 flex flex-col min-w-0">
+                            <span class="text-white text-sm font-medium truncate">{{ video["uploader"] }}</span>
+                            <span class="text-gray-500 text-sm truncate">{{ video["channel_follower_count"] }}
+                                Subscribers</span>
+                        </span>
+                    </span>
+                    <a href="{{ '/channel/'+video['channel_id'] }}" type="button"
+                        class="inline-flex cursor-pointer items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-transparant focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">View
+                        Channel</a>
+                </span>
+            </button>
+            <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden mt-4">
+                <div class="p-4">
+                    <div class="text-gray-500">
+                        {% for para in video["description"].split('\n') %}
+                        <p>{{para}}</p>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
-            
-            <div class="w-full h-full max-h-full overflow-y-scroll mt-4 lg:w-1/4 px-4">
-                <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden">
-                    <div class="p-4">
-                        <h2 class="text-gray-100 font-bold text-lg mb-4">Related Videos</h2>
-                        <div class="grid grid-cols-1 gap-4">
-                            {% for result in data %}
-                            <div class="flex flex-col bg-gray-700 hover:bg-gray-600 focus:bg-gray-600 focus:outline-none transition rounded-lg overflow-hidden shadow-md self-stretch transition-all duration-200 hover:scale-95 focus:ring-2 focus:ring-offset-2 focus:ring-green-500 hover:ring-2 hover:ring-offset-2 hover:ring-green-500 hover:ring-offset-gray-800">
-                                <a href="/watch/{{ result['id'] }}">
-                                  <img class="rounded w-full mb-2" src="{{ result['thumbnail'] }}" alt="{{ result['title'] }}">
-                                  <h2 class="p-4 pb-0 text-lg text-white font-medium">{{ result["title"] }}</h2>
-                                  <p class="p-4 pt-0 text-gray-400">{{ result["views"] }} views, {{ result["published"] }}</p>
-                                </a>
-                                <div class="flex flex-col"></div>
-                                <p class="mt-auto p-4 pt-0 text-gray-400 hover:text-gray-300"><a class="" href="{{ result['owner_url'].replace('https://www.youtube.com', '') }}">{{ result['author'] }}</a></p>
-                              </div>
-                            {% endfor %}
+        </div>
+
+        <div class="w-full h-full max-h-full overflow-y-scroll mt-4 lg:w-1/4 px-4">
+            <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <div class="p-4">
+                    <h2 class="text-gray-100 font-bold text-lg mb-4">Related Videos</h2>
+                    <div class="grid grid-cols-1 gap-4">
+                        {% for result in data %}
+                        <div
+                            class="flex flex-col bg-gray-700 hover:bg-gray-600 focus:bg-gray-600 focus:outline-none transition rounded-lg overflow-hidden shadow-md self-stretch transition-all duration-200 hover:scale-95 focus:ring-2 focus:ring-offset-2 focus:ring-green-500 hover:ring-2 hover:ring-offset-2 hover:ring-green-500 hover:ring-offset-gray-800">
+                            <a href="/watch/{{ result['id'] }}">
+                                <img class="rounded w-full mb-2" src="{{ result['thumbnail'] }}"
+                                    alt="{{ result['title'] }}">
+                                <h2 class="p-4 pb-0 text-lg text-white font-medium">{{ result["title"] }}</h2>
+                                <p class="p-4 pt-0 text-gray-400">{{ result["views"] }}, {{ result["published"] }}
+                                </p>
+                            </a>
+                            <div class="flex flex-col"></div>
+                            <p class="mt-auto p-4 pt-0 text-gray-400 hover:text-gray-300"><a class=""
+                                    href="{{ result['owner_url'].replace('https://www.youtube.com', '') }}">{{ result['author'] }}</a>
+                            </p>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

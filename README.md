@@ -20,7 +20,6 @@ side note: demo is slow to start since it's hosted on replit, it take time to st
 
 # ToDo
 
-* Use Another video player (like videojs or Plyr)
 * Playlist Support
 
 ## Star History
@@ -49,7 +48,7 @@ Channel:
 1. install python3 on https://www.python.org/ or using your package manager
 
 2. install dependencies
-`pip3 install pytube flask requests urllib3`
+`pip3 install yt-dlp flask requests urllib3`
 
 3. run server
 `python3 main.py`
@@ -58,3 +57,12 @@ done ! you can now access website with http://localhost:5000
 
 # Licence
 MIT
+
+# Credit
+upload icon - https://www.svgrepo.com/svg/472024/upload-01
+view icon - https://www.svgrepo.com/svg/341292/view
+Like icon - https://www.svgrepo.com/svg/111221/like
+Share icon - https://www.svgrepo.com/svg/506316/share-1
+Download icon - https://www.svgrepo.com/svg/491014/download-3
+more users - https://www.svgrepo.com/svg/506361/users-more
+video - https://www.svgrepo.com/svg/334979/videos

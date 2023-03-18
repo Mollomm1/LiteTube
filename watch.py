@@ -9,15 +9,17 @@ def GetTracks(video):
     info = json.loads(json.dumps(ydl.sanitize_info(ydl.extract_info('https://youtube.com/watch?v='+video, download=False))))
     allstreams = info["formats"]
 
-    with open("file.txt", "w") as file:
-        file.write(str(info))
-
     data["channel_id"] = info["channel_id"]
     data["title"] = info["fulltitle"]
     data["view_count"] = info["view_count"]
     data["uploader"] = info["uploader"]
     data["age_limit"] = info["age_limit"]
-    data["upload_date"] = timeago.format(datetime.timedelta(seconds = int(info["upload_date"])))
+    a = info["upload_date"]
+    date_year = int(str(a)[0:4])
+    date_month = int(str(a)[4:6])
+    date_day = int(str(a)[6:8])
+    data["upload_date"] = timeago.format(datetime.date(date_year, date_month, date_day))
+    print(data["upload_date"])
     data["description"] = info["description"]
     data["channel_follower_count"] = info["channel_follower_count"]
     data["like_count"] = info["like_count"]

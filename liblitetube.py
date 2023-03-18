@@ -48,6 +48,8 @@ def get_channel_data(channel_url):
     channeldata_header = json.loads(r.text.split("var ytInitialData = ")[1].split("</script>")[0][:-1])["header"]["c4TabbedHeaderRenderer"]
     channeldata = {}
     channeldata["channel_name"] = channeldata_metadata["title"]
+    channeldata["subscriberCount"] = channeldata_header["subscriberCountText"]["simpleText"]
+    channeldata["videosCount"] = channeldata_header["videosCountText"]["runs"][0]["text"]
     try:
         channeldata["channel_profile_picture"] = channeldata_metadata["avatar"]["thumbnails"][0]
     except Exception:

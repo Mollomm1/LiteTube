@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, Response
 from pytube import YouTube
 import requests, urllib.parse, re
 from liblitetube import *
@@ -17,14 +17,22 @@ def index():
 
 @app.route("/watch/<video_id>")
 def _watch(video_id):
-    video = GetTracks(video_id)
-    streams = video["streams"]
-    data = get_related(video)
-    return render_template('watch.html', streams=streams, video=video, data=data)
     try:
-        print(" ")
-    except Exception as e:
-        return str(e)
+        video = GetTracks(video_id)
+        streams = video["streams"]
+        data = get_related(video)
+        return render_template('watch.html', streams=streams, video=video, data=data, video_id=video_id)
+    except Exception:
+        return "error"
+
+@app.route('/channelicon/<channel_name>')
+def channelicon(channel_name):
+    c = get_channel_data(channel_name)
+    resp = requests.get(c['channel_profile_picture']['url'])
+    excluded_headers = ['content-encoding', 'content-length', 'transfer-encoding', 'connection']
+    headers = [(name, value) for (name, value) in     resp.raw.headers.items() if name.lower() not in excluded_headers]
+    response = Response(resp.content, resp.status_code, headers)
+    return response
 
 @app.route('/channel/<channel_name>')
 def channel(channel_name):
@@ -32,7 +40,6 @@ def channel(channel_name):
         data = ChannelLoadPage(request.args.get("token"), request.args.get("key"))
         return(data)
     c = get_channel_data(channel_name)
-    print(c["continuationtoken"])
     return render_template('channel.html', channel=c, videos=c['videos'], human_format=human_format)
 
 @app.route('/c/<channelname>')
@@ -52,8 +59,7 @@ def search():
         search = Search(query)
         search_results = search['results']
         return render_template("search.html", search_results=search_results, key=search["key"], token=search["continuationtoken"], query=query, human_format=human_format)
-    except Exception as e:
-        print(e)
+    except Exception:
         return "error"
 
 if __name__ == "__main__":

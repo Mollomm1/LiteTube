@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "LiteTube"
-version = "0.3.3b"
+version = "0.3.4"
 description = "adfree unblocked youtube frontend"
 authors = ["Mollomm1"]
 license = "MIT"
