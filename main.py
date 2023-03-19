@@ -1,9 +1,18 @@
+# importing the necessary libraries and modules
 from flask import Flask, render_template, request, redirect, Response
+from waitress import serve
 from pytube import YouTube
 import requests, urllib.parse, re
 from liblitetube.main import *
 
+# change variables here
+host="0.0.0.0"
+port=5000
+
 def get_related(video):
+    '''
+    A function to get related videos for a given video
+    '''
     search = Search(video["title"]+" "+video["uploader"])
     search_results = search['results']
     return(search_results)
@@ -12,10 +21,16 @@ app = Flask(__name__, template_folder='templates', static_url_path='/static', st
 
 @app.route("/")
 def index():
+    '''
+    The root endpoint of the app
+    '''
     return render_template("index.html")
 
 @app.route("/watch/<video_id>")
 def _watch(video_id):
+    '''
+    The endpoint for watching a video
+    '''
     try:
         video = GetTracks(video_id)
         streams = video["streams"]
@@ -26,6 +41,9 @@ def _watch(video_id):
 
 @app.route('/channelicon/<channel_name>')
 def channelicon(channel_name):
+    '''
+    An endpoint for fetching the channel icon
+    '''
     c = get_channel_data(channel_name)
     resp = requests.get(c['channel_profile_picture']['url'])
     excluded_headers = ['content-encoding', 'content-length', 'transfer-encoding', 'connection']
@@ -35,6 +53,9 @@ def channelicon(channel_name):
 
 @app.route('/channel/<channel_name>')
 def channel(channel_name):
+    '''
+    An endpoint for displaying a channel's data
+    '''
     if request.args.get("token") and request.args.get("key"):
         data = ChannelLoadPage(request.args.get("token"), request.args.get("key"))
         return(data)
@@ -43,11 +64,17 @@ def channel(channel_name):
 
 @app.route('/c/<channelname>')
 def channel_c(channelname):
+    '''
+    An endpoint for redirecting to the canonical link for a channel
+    '''
     data = get_canonical_link(channelname).replace("https://www.youtube.com", "")
     return redirect(data, code=302)
 
 @app.route("/search")
 def search():
+    '''
+    An endpoint for searching for videos
+    '''
     query = request.args.get("q")
     if not query:
         return "Please enter a search query!"
@@ -62,4 +89,9 @@ def search():
         return "error"
 
 if __name__ == "__main__":
-    app.run(debug=False, host="0.0.0.0", port=5000)
+    '''
+    Main thread that start the app
+    '''
+    print(f'LiteTube is listening on http://{host}:{port}')
+    serve(app, host=host, port=port)
+    # use this for dev: app.run(debug=True, threaded=True, host=host, port=port)
