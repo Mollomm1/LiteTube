@@ -54,6 +54,13 @@ Channel:
 `python3 main.py`
 
 done ! you can now access website with http://localhost:5000
+# Donations (Crypto)
+
+<img src="https://i.imgur.com/uYmXzVR.gif" width="164">
+
+<img src="https://www.getmonero.org/press-kit/symbols/monero-symbol-480.png" alt="" width="16" />XMR: 42oSrfaK3biTTJzGLJHmhMQB8QNxcUkJhR7rc6R96WxgLmTriRjosCKhgv9vKWXFodJokdAmsFUXNCyJBoHyoTzJ8jtxhPe
+
+<img src="https://i.imgur.com/tEEwMCy.png" width="128"/>
 
 # Licence
 MIT
@@ -69,6 +76,6 @@ Share icon - https://www.svgrepo.com/svg/506316/share-1
 
 Download icon - https://www.svgrepo.com/svg/491014/download-3
 
-more users - https://www.svgrepo.com/svg/506361/users-more
+more users icon - https://www.svgrepo.com/svg/506361/users-more
 
-video - https://www.svgrepo.com/svg/334979/videos
+video icon - https://www.svgrepo.com/svg/334979/videos

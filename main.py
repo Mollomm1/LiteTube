@@ -26,18 +26,28 @@ def index():
     '''
     return render_template("index.html")
 
+'''
+errors pages
+'''
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('errors/500.html', e=e), 500
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('errors/404.html'), 404
+'''
+
+'''
+
 @app.route("/watch/<video_id>")
 def _watch(video_id):
     '''
     The endpoint for watching a video
     '''
-    try:
-        video = GetTracks(video_id)
-        streams = video["streams"]
-        data = get_related(video)
-        return render_template('watch.html', streams=streams, video=video, data=data, video_id=video_id)
-    except Exception:
-        return "error"
+    video = GetTracks(video_id)
+    streams = video["streams"]
+    data = get_related(video)
+    return render_template('watch.html', streams=streams, video=video, data=data, video_id=video_id)
 
 @app.route('/channelicon/<channel_name>')
 def channelicon(channel_name):
@@ -78,15 +88,12 @@ def search():
     query = request.args.get("q")
     if not query:
         return "Please enter a search query!"
-    try:
-        if request.args.get("token") and request.args.get("key"):
-            data = SearchLoadPage(request.args.get("token"), request.args.get("key"))
-            return(data)
-        search = Search(query)
-        search_results = search['results']
-        return render_template("search.html", search_results=search_results, key=search["key"], token=search["continuationtoken"], query=query, human_format=human_format)
-    except Exception:
-        return "error"
+    if request.args.get("token") and request.args.get("key"):
+        data = SearchLoadPage(request.args.get("token"), request.args.get("key"))
+        return(data)
+    search = Search(query)
+    search_results = search['results']
+    return render_template("search.html", search_results=search_results, key=search["key"], token=search["continuationtoken"], query=query, human_format=human_format)
 
 if __name__ == "__main__":
     '''
