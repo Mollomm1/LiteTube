@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, redirect, Response
 from pytube import YouTube
 import requests, urllib.parse, re
-from liblitetube import *
-from watch import *
+from liblitetube.main import *
 
 def get_related(video):
     search = Search(video["title"]+" "+video["uploader"])
