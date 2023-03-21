@@ -48,7 +48,7 @@ Channel:
 1. install python3 on https://www.python.org/ or using your package manager
 
 2. install dependencies
-`pip3 install yt-dlp flask waitress requests urllib3`
+`pip3 install yt-dlp flask waitress requests urllib3 timeago`
 
 3. run server
 `python3 main.py`

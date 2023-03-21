@@ -1,7 +1,6 @@
 # importing the necessary libraries and modules
 from flask import Flask, render_template, request, redirect, Response
 from waitress import serve
-from pytube import YouTube
 import requests, urllib.parse, re
 from liblitetube.main import *
 
