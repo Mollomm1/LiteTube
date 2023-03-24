@@ -117,30 +117,10 @@
                     }
                 </script>
                 {% for stream in streams %}
-                <a download href="{{ streams[stream][0]["url"] }}" target="_blank" rel="noopener noreferreré type="button"
-                    class="inline-flex m-3 mr-0 mt-0 cursor-pointer items-center justify-center px-2 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-transparant focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                    <svg width="16" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <title>Download-3</title>
-                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <g id="Download-3">
-                                    <rect id="Rectangle" fill-rule="nonzero" x="0" y="0" width="24" height="24"> </rect>
-                                    <line x1="12" y1="5" x2="12" y2="15" id="Path" stroke="#ffffff" stroke-width="2"
-                                        stroke-linecap="round"> </line>
-                                    <path
-                                        d="M17,11 L12.7071,15.2929 C12.3166,15.6834 11.6834,15.6834 11.2929,15.2929 L7,11"
-                                        id="Path" stroke="#ffffff" stroke-width="2" stroke-linecap="round"> </path>
-                                    <line x1="19" y1="20" x2="5" y2="20" id="Path" stroke="#ffffff" stroke-width="2"
-                                        stroke-linecap="round"> </line>
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
-                    {{ stream }}
-                </a>
+                <!--
+                    i deleted this for legal raisons (sorry)
+                    - @mollomm1
+                -->
                 {% endfor %}
             </div>
             <button type="button"
@@ -188,7 +168,7 @@
                             </a>
                             <div class="flex flex-col"></div>
                             <p class="mt-auto p-4 pt-0 text-gray-400 hover:text-gray-300"><a class=""
-                                    href="{{ result['owner_url'].replace('https://www.youtube.com', '') }}">{{ result['author'] }}</a>
+                                    href="{{ '/c'+(result['owner_url']) }}">{{ result['channel'] }}</a>
                             </p>
                         </div>
                         {% endfor %}

@@ -1,7 +1,9 @@
 # importing the necessary libraries and modules
 from flask import Flask, render_template, request, redirect, Response
 from waitress import serve
-import requests, urllib.parse, re
+import requests
+import urllib.parse
+import re
 from liblitetube.main import *
 
 # change variables here
