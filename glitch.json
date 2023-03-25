@@ -1,0 +1,4 @@
+{
+    "desc": "for glitch.com Hosting",
+    "start": "chmod +x run.sh; ./run.sh"
+}
