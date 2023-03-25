@@ -97,6 +97,14 @@ def SearchLoadPage(continuation_token, key):
                 "channel": video["videoRenderer"]["longBylineText"]["runs"][0]["text"],
                 "owner_url": video["videoRenderer"]["ownerText"]["runs"][0]["navigationEndpoint"]["commandMetadata"]["webCommandMetadata"]["url"]
             }
+
+            try:   
+                if video["videoRenderer"]["ownerBadges"][0]["metadataBadgeRenderer"]["tooltip"] == "Verified":
+                    video_data["isVerified"] = True
+                else:
+                    video_data["isVerified"] = False
+            except Exception:
+                video_data["isVerified"] = False
             results.append(video_data)
         except KeyError:
             pass
@@ -128,6 +136,9 @@ def Search(query):
     initial_data_start_idx = response_content.find(initial_data_start) + len(initial_data_start)
     initial_data_end_idx = response_content.find(initial_data_end, initial_data_start_idx)
 
+    #with open("file.txt", "w") as file:
+    #    print(file.write(response_content[initial_data_start_idx:initial_data_end_idx]))
+
     # Extract data about the videos
     try:
         initial_data = json.loads(response_content[initial_data_start_idx:initial_data_end_idx])
@@ -142,8 +153,16 @@ def Search(query):
                     "thumbnail": video["videoRenderer"]["thumbnail"]["thumbnails"][0]["url"],
                     "title": video["videoRenderer"]["title"]["runs"][0]["text"],
                     "channel": video["videoRenderer"]["longBylineText"]["runs"][0]["text"],
-                    "owner_url": video["videoRenderer"]["ownerText"]["runs"][0]["navigationEndpoint"]["commandMetadata"]["webCommandMetadata"]["url"]
+                    "owner_url": video["videoRenderer"]["ownerText"]["runs"][0]["navigationEndpoint"]["commandMetadata"]["webCommandMetadata"]["url"]  
                 }
+                
+                try:   
+                    if video["videoRenderer"]["ownerBadges"][0]["metadataBadgeRenderer"]["tooltip"] == "Verified":
+                            video_data["isVerified"] = True
+                    else:
+                        video_data["isVerified"] = False
+                except Exception:
+                    video_data["isVerified"] = False
                 results.append(video_data)
             except KeyError:
                 pass

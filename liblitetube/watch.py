@@ -19,7 +19,7 @@ def GetTracks(video):
     # Extract information about the video using the downloader
     info = json.loads(json.dumps(ydl.sanitize_info(ydl.extract_info('https://youtube.com/watch?v='+video, download=False))))
     allstreams = info["formats"]
-
+    
     # Extract relevant information from the video information
     data["channel_id"] = info["channel_id"]
     data["title"] = info["fulltitle"]
