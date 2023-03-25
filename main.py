@@ -68,7 +68,10 @@ def channel(channel_name):
     An endpoint for displaying a channel's data
     '''
     if request.args.get("token") and request.args.get("key"):
-        data = ChannelLoadPage(request.args.get("token"), request.args.get("key"))
+        try:
+            data = ChannelLoadPage(request.args.get("token"), request.args.get("key"))
+        except requests.exceptions.HTTPError:
+            data = "end"
         return(data)
     c = get_channel_data(channel_name)
     return render_template('channel.html', channel=c, videos=c['videos'], human_format=human_format)
@@ -90,7 +93,10 @@ def search():
     if not query:
         return "Please enter a search query!"
     if request.args.get("token") and request.args.get("key"):
-        data = SearchLoadPage(request.args.get("token"), request.args.get("key"))
+        try:
+            data = SearchLoadPage(request.args.get("token"), request.args.get("key"))
+        except requests.exceptions.HTTPError:
+            data = "end"
         return(data)
     search = Search(query)
     search_results = search['results']

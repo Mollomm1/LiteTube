@@ -153,8 +153,7 @@ def ChannelLoadPage(continuation_token, key):
                 "title": video["richItemRenderer"]["content"]["videoRenderer"]["title"]["runs"][0]["text"]
             }
             results.append(video_data)
-        except KeyError as e:
-            print(e)
+        except KeyError:
             pass
 
     # Extract the key and continuation token for pagination

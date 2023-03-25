@@ -68,6 +68,10 @@ done ! you can now access website with http://localhost:5000
 MIT
 
 # Credit
+
+hero Icons : https://heroicons.com/
+
+svg repo icons:
 upload icon - https://www.svgrepo.com/svg/472024/upload-01
 
 view icon - https://www.svgrepo.com/svg/341292/view
