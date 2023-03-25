@@ -32,30 +32,32 @@ def get_channel_data(channel_url):
     }
 
     # Extract data about the videos
-    for video in page_data["contents"]["twoColumnBrowseResultsRenderer"]["tabs"][1]["tabRenderer"]["content"]["richGridRenderer"]["contents"]:
+    try:
+        for video in page_data["contents"]["twoColumnBrowseResultsRenderer"]["tabs"][1]["tabRenderer"]["content"]["richGridRenderer"]["contents"]:
+            try:
+                video_data = {
+                    "id": video["richItemRenderer"]["content"]["videoRenderer"]["videoId"],
+                    "views": human_format(video["richItemRenderer"]["content"]["videoRenderer"]["viewCountText"]["simpleText"]),
+                    "published": video["richItemRenderer"]["content"]["videoRenderer"]["publishedTimeText"]["simpleText"],
+                    "thumbnail": video["richItemRenderer"]["content"]["videoRenderer"]["thumbnail"]["thumbnails"][0]["url"],
+                    "title": video["richItemRenderer"]["content"]["videoRenderer"]["title"]["runs"][0]["text"],
+                }
+                channeldata["videos"].append(video_data)
+            except KeyError:
+                pass
+
+        # Extract the key and continuation token for pagination
         try:
-            video_data = {
-                "id": video["richItemRenderer"]["content"]["videoRenderer"]["videoId"],
-                "views": human_format(video["richItemRenderer"]["content"]["videoRenderer"]["viewCountText"]["simpleText"]),
-                "published": video["richItemRenderer"]["content"]["videoRenderer"]["publishedTimeText"]["simpleText"],
-                "thumbnail": video["richItemRenderer"]["content"]["videoRenderer"]["thumbnail"]["thumbnails"][0]["url"],
-                "title": video["richItemRenderer"]["content"]["videoRenderer"]["title"]["runs"][0]["text"],
-            }
-            channeldata["videos"].append(video_data)
-        except KeyError:
-            pass
+            channeldata["key"] = re.search(r'"INNERTUBE_API_KEY":"(.*?)"', r.text).group(1)
+        except AttributeError:
+            channeldata["key"] = None
 
-    # Extract the key and continuation token for pagination
-    try:
-        channeldata["key"] = re.search(r'"INNERTUBE_API_KEY":"(.*?)"', r.text).group(1)
-    except AttributeError:
-        channeldata["key"] = None
-
-    try:
-        channeldata["continuationtoken"] = re.search(r'"continuationCommand":{"token":"(.*?)"', r.text).group(1)
-    except AttributeError:
-        channeldata["continuationtoken"] = None
-
+        try:
+            channeldata["continuationtoken"] = re.search(r'"continuationCommand":{"token":"(.*?)"', r.text).group(1)
+        except AttributeError:
+            channeldata["continuationtoken"] = None
+    except Exception:
+        return channeldata
     return channeldata
 
 def ChannelLoadPage(continuation_token, key):

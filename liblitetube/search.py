@@ -123,7 +123,10 @@ def Search(query):
     
     # Initialize empty dictionaries and lists
     data = {}
-    results = []
+    Videosresults = []
+    AllResults = []
+    Channelsresults = []
+    Playlistsresults = []
 
     # Send request to get the page content
     response = requests.get("https://www.youtube.com/results", headers=headers, cookies=cookies, params={"search_query": query})
@@ -136,34 +139,88 @@ def Search(query):
     initial_data_start_idx = response_content.find(initial_data_start) + len(initial_data_start)
     initial_data_end_idx = response_content.find(initial_data_end, initial_data_start_idx)
 
-    #with open("file.txt", "w") as file:
-    #    print(file.write(response_content[initial_data_start_idx:initial_data_end_idx]))
-
-    # Extract data about the videos
+    # Extract data about the videos, channels, playlists.
     try:
         initial_data = json.loads(response_content[initial_data_start_idx:initial_data_end_idx])
-        video_contents = initial_data['contents']['twoColumnSearchResultsRenderer']['primaryContents']['sectionListRenderer']['contents'][0]['itemSectionRenderer']['contents']
+        data_contents = initial_data['contents']['twoColumnSearchResultsRenderer']['primaryContents']['sectionListRenderer']['contents'][0]['itemSectionRenderer']['contents']
 
-        for video in video_contents:
+        for i in data_contents:
             try:
+                '''
+                for videos
+                '''
                 video_data = {
-                    "id": video["videoRenderer"]["videoId"],
-                    "views": video["videoRenderer"]["viewCountText"]["simpleText"],
-                    "published": video["videoRenderer"]["publishedTimeText"]["simpleText"],
-                    "thumbnail": video["videoRenderer"]["thumbnail"]["thumbnails"][0]["url"],
-                    "title": video["videoRenderer"]["title"]["runs"][0]["text"],
-                    "channel": video["videoRenderer"]["longBylineText"]["runs"][0]["text"],
-                    "owner_url": video["videoRenderer"]["ownerText"]["runs"][0]["navigationEndpoint"]["commandMetadata"]["webCommandMetadata"]["url"]  
+                    "id": i["videoRenderer"]["videoId"],
+                    "views": i["videoRenderer"]["viewCountText"]["simpleText"],
+                    "published": i["videoRenderer"]["publishedTimeText"]["simpleText"],
+                    "thumbnail": i["videoRenderer"]["thumbnail"]["thumbnails"][0]["url"],
+                    "title": i["videoRenderer"]["title"]["runs"][0]["text"],
+                    "channel": i["videoRenderer"]["longBylineText"]["runs"][0]["text"],
+                    "owner_url": i["videoRenderer"]["ownerText"]["runs"][0]["navigationEndpoint"]["commandMetadata"]["webCommandMetadata"]["url"],
+                    "type": "video"
                 }
                 
                 try:   
-                    if video["videoRenderer"]["ownerBadges"][0]["metadataBadgeRenderer"]["tooltip"] == "Verified":
+                    if i["videoRenderer"]["ownerBadges"][0]["metadataBadgeRenderer"]["tooltip"] == "Verified":
                             video_data["isVerified"] = True
                     else:
                         video_data["isVerified"] = False
                 except Exception:
                     video_data["isVerified"] = False
-                results.append(video_data)
+                AllResults.append(video_data)
+                Videosresults.append(video_data)
+            except KeyError:
+                pass
+
+            try:
+                '''
+                for Channels
+                '''
+                channel_data = {
+                    "id": i["channelRenderer"]["channelId"],
+                    "subscribers": i["channelRenderer"]["videoCountText"]["simpleText"],
+                    "channelpfp": i["channelRenderer"]["thumbnail"]["thumbnails"][-1]["url"].replace("//", "https://"),
+                    "title": i["channelRenderer"]["title"]["simpleText"],
+                    "desc": i["channelRenderer"]["descriptionSnippet"]["runs"][0]["text"],
+                    "newid": i["channelRenderer"]["subscriberCountText"]["simpleText"],
+                    "type": "channel"
+                }
+                
+                try:   
+                    if i["channelRenderer"]["ownerBadges"][0]["metadataBadgeRenderer"]["tooltip"] == "Verified":
+                            channel_data["isVerified"] = True
+                    else:
+                        channel_data["isVerified"] = False
+                except Exception:
+                    channel_data["isVerified"] = False
+                AllResults.append(channel_data)
+                Channelsresults.append(channel_data)
+            except KeyError:
+                pass
+
+            try:
+                '''
+                for Playlists
+                '''
+                playlist_data = {
+                    "id": i["playlistRenderer"]["playlistId"],
+                    "videoCount": i["playlistRenderer"]["videoCount"],
+                    "thumbnail": i["playlistRenderer"]["thumbnailRenderer"]["playlistVideoThumbnailRenderer"]["thumbnail"]["thumbnails"][-1]["url"],
+                    "title": i["playlistRenderer"]["title"]["simpleText"],
+                    "channel": i["playlistRenderer"]["shortBylineText"]["runs"][0]["text"],
+                    "channelid": i["playlistRenderer"]["shortBylineText"]["runs"][0]["navigationEndpoint"]["browseEndpoint"]["canonicalBaseUrl"],
+                    "type": "playlist"
+                }
+                
+                try:   
+                    if i["playlistRenderer"]["ownerBadges"][0]["metadataBadgeRenderer"]["tooltip"] == "Verified":
+                            playlist_data["isVerified"] = True
+                    else:
+                        playlist_data["isVerified"] = False
+                except Exception:
+                    playlist_data["isVerified"] = False
+                AllResults.append(playlist_data)
+                Playlistsresults.append(playlist_data)
             except KeyError:
                 pass
 
@@ -173,5 +230,9 @@ def Search(query):
         pass
 
     # Add search results to data dictionary and return
-    data["results"] = results
+    data["results"] = Videosresults # old
+    data["VideosResults"] = Videosresults
+    data["ChannelsResults"] = Channelsresults
+    data["AllResults"] = AllResults
+    data["PlaylistResults"] = "playlist here"
     return data
