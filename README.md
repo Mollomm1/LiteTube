@@ -1,9 +1,9 @@
 <p align="center">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Mollomm1/LiteTube/blob/master/static/logo.png?raw=true">
-      <source media="(prefers-color-scheme: light)" srcset="https://github.com/Mollomm1/LiteTube/blob/master/static/logo_white_theme.png?raw=true">
-      <img alt="" src="">
-    </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Mollomm1/LiteTube/blob/assets/logo.png?raw=true">
+    <source media="(prefers-color-scheme: light)" srcset="https://github.com/Mollomm1/LiteTube/blob/assets/logo_white.png?raw=true">
+    <img alt="" src="">
+  </picture>
 </p>
 
 This is a privacy frontend for YouTube, designed to enhance user privacy while watching videos.
