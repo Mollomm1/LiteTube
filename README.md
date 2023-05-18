@@ -10,6 +10,8 @@ This is a privacy frontend for YouTube, designed to enhance user privacy while w
 
 > demo (may be slow) : https://demo.litetube.freeddns.org/
 
+> Dev Branch Demo (Unstable) : https://litetube.glitch.me/
+
 side note: demo is slow to start since it's hosted on replit, it take time to start (30-60).
 
 `⚠️ This project is currently a work in progress and is still unfinished. While I'm actively working on it and making progress, there may still be bugs and incomplete features. ⚠️`
