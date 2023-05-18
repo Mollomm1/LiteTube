@@ -18,11 +18,11 @@ side note: demo is slow to start since it's hosted on replit, it take time to st
 
 <span style="color:red">`⚠️ Legal Disclaimer ⚠️: LiteTube frontend does not download or host any of the videos or content displayed on it. All content is streamed directly from the original YouTube servers. We are not responsible for the content uploaded by third-party users on YouTube, and we do not have control over the availability or accuracy of the content. LiteTube not affiliated with YouTube or Google, and LiteTube is not endorsed or certified by them.`</span>
 
-# Feature
+# Features 
 * Ad Free
 * Fast and Lite
 
-# ToDo
+# To Do
 
 * Playlist Support
 
