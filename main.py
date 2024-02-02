@@ -138,5 +138,5 @@ if __name__ == "__main__":
     Main thread that start the app
     '''
     print(f'LiteTube is listening on http://{host}:{port}')
-    serve(app, host=host, port=port)
+    app.run(debug=True, threaded=True, host=host, port=port)
     # use this for dev: app.run(debug=True, threaded=True, host=host, port=port)
