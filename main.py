@@ -45,7 +45,6 @@ def proxy(url):
     """proxify the request."""
     r = make_request(url, request.method, dict(request.headers), request.form)
     headers = dict(r.raw.headers)
-    headers.pop('Connection', None)
     def generate():
         for chunk in r.raw.stream(decode_content=False):
             yield chunk
@@ -58,6 +57,13 @@ def make_request(url, method, headers={}, data=None):
     if referer:
         proxy_ref = proxied_request_info(referer)
         headers.update({ "referer" : "http://%s/%s" % (proxy_ref[0], proxy_ref[1])})
+
+    # parse the url and get the query string
+    parsed_url = urllib.parse.urlparse(url)
+    query_string = urllib.parse.parse_qs(parsed_url.query)
+
+    # pass the query string as a dictionary to the params argument
+    return requests.request(method, url, params=query_string, stream=True, headers=headers, allow_redirects=False, data=data)
 
     return requests.request(method, url, params=request.args, stream=True, headers=headers, allow_redirects=False, data=data)
 
