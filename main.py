@@ -40,6 +40,18 @@ def not_found(e):
 
 '''
 
+@app.route('/p/<path:url>', methods=["GET", "POST"])
+def proxy(url):
+    """proxify the request."""
+    r = make_request(url, request.method, dict(request.headers), request.form)
+    headers = dict(r.raw.headers)
+    def generate():
+        for chunk in r.raw.stream(decode_content=False):
+            yield chunk
+    out = Response(generate(), headers=headers)
+    out.status_code = r.status_code
+    return out
+
 @app.route("/playlist/<playlist_id>")
 def playlist(playlist_id):
     '''
