@@ -33,7 +33,11 @@ def GetTracks(video):
     data["upload_date"] = timeago.format(datetime.date(date_year, date_month, date_day))
     data["description"] = info["description"]
     data["channel_follower_count"] = info["channel_follower_count"]
-    data["like_count"] = info["like_count"]
+    try:
+        data["like_count"] = info["like_count"]
+    except Exception:
+        data["like_count"] = "?"
+        print(data)
     data["thumbnail"] = info["thumbnail"]
 
     # Extract available video streams
