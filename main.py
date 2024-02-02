@@ -52,6 +52,14 @@ def proxy(url):
     out.status_code = r.status_code
     return out
 
+def make_request(url, method, headers={}, data=None):
+    referer = request.headers.get('referer')
+    if referer:
+        proxy_ref = proxied_request_info(referer)
+        headers.update({ "referer" : "http://%s/%s" % (proxy_ref[0], proxy_ref[1])})
+
+    return requests.request(method, url, params=request.args, stream=True, headers=headers, allow_redirects=False, data=data)
+
 @app.route("/playlist/<playlist_id>")
 def playlist(playlist_id):
     '''
