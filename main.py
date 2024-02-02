@@ -45,6 +45,7 @@ def proxy(url):
     """proxify the request."""
     r = make_request(url, request.method, dict(request.headers), request.form)
     headers = dict(r.raw.headers)
+    headers.pop('Connection', None)
     def generate():
         for chunk in r.raw.stream(decode_content=False):
             yield chunk
